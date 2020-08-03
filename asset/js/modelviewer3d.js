@@ -2,11 +2,11 @@ import * as THREE from './node_modules/three/build/three.module.js';
 import { OBJLoader } from './node_modules/three/examples/jsm/loaders/OBJLoader.js';
 import { MTLLoader } from './node_modules/three/examples/jsm/loaders/MTLLoader.js';
 var scene = new THREE.Scene();
-var camera = new THREE.PerspectiveCamera(75, 1, 1000);
+var camera = new THREE.PerspectiveCamera(75, 1, 0.1, 1000);
 var renderer = new THREE.WebGLRenderer();
 //                    camera.position.z = 5;
 const modeldiv = document.querySelector('.model-viewer-3d');
-renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.setSize(400,400);
 modeldiv.appendChild(renderer.domElement);
 // Our Javascript will go here.
             var modelurl = modeldiv.dataset.modelurl;
@@ -17,9 +17,7 @@ modeldiv.appendChild(renderer.domElement);
             camera.add(pointLight);
             scene.add(camera);
 
-            var arrowhead;
-            var textureLoader = new THREE.TextureLoader;
-            var texture = textureLoader.load(modelurl + '.1001.jpg');
+            var model;
             var mtlLoader = new MTLLoader();
             mtlLoader.load(modelurl + '.mtl', function (materials) {
                 materials.preload();
@@ -40,13 +38,13 @@ modeldiv.appendChild(renderer.domElement);
                         scene.add(object);
                         camera.position.z = 2;
                         //renderer.render(scene, camera);
-                        arrowhead = object;
+                        model = object;
                 });
             });
 
             function animate() {
                 requestAnimationFrame( animate);
-            if (arrowhead) arrowhead.rotation.y += 0.01;
+            if (model) model.rotation.y += 0.01;
                 renderer.render(scene, camera);
                 }
             animate();
