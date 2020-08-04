@@ -11,6 +11,7 @@ class ModelViewer3D implements RendererInterface
 
     
     public function render(PhpRenderer $view, MediaRepresentation $media, array $options = []){
+        $this->addCSS($view);
         $baseURL = $view->setting('model_viewer_3d_baseURL');
         $data = $media->mediaData();
         $filename = $data['o:source'];
@@ -21,6 +22,10 @@ class ModelViewer3D implements RendererInterface
 
     public function addJS(PhpRenderer $view){      
         return $view->assetUrl('js/modelviewer3d.js', 'ModelViewer3D');
+    }
+
+    public function addCSS(PhpRenderer $view){
+        $view->headLink()->appendStylesheet($view->assetUrl('css/style.css', 'ModelViewer3D'));
     }
 
 }

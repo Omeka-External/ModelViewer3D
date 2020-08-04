@@ -41,17 +41,4 @@ class Module extends AbstractModule
         $settings->set('model_viewer_3d_baseURL', $formData['baseURL']);
         return true;
     }
-
-    // public function attachListeners(SharedEventManagerInterface $sharedEventManager){
-    //     $sharedEventManager->attach(
-    //         'Omeka\Controller\Site\Item',
-    //         'view.show.after',
-    //         [$this, 'addJS']
-    //     );
-    // }
-
-    // public function addJS($event){
-    //     $view = $event->getTarget();
-    //     $view->headScript()->appendFile($view->assetUrl('js/modelviewer3d.js', 'ModelViewer3D'));
-    // }
 }
