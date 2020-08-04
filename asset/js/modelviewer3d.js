@@ -60,6 +60,7 @@ function animate() {
         if (resizeRendererToDisplaySize(renderer)) {
         const canvas = renderer.domElement;
         camera.aspect = canvas.clientWidth / canvas.clientHeight;
+        camera.zoom = 3;
         camera.updateProjectionMatrix();
         }
 
