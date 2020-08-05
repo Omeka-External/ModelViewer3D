@@ -65,6 +65,10 @@ function animate() {
         return needResize;
     }
 
+    function onTransitionEnd( event ) {
+        event.target.remove();      
+    }
+
     function render(time) {
         time *= 0.001;
 
