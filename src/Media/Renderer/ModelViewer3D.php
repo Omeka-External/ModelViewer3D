@@ -17,7 +17,7 @@ class ModelViewer3D implements RendererInterface
         $filename = $data['o:source'];
         $url = $baseURL.$filename;
         
-        return '<div class="model-viewer-3d" data-modelurl="'.$url.'"><script src="'.$this->addJS($view).'" type="module"></script></div>';
+        return '<div class="model-viewer-3d" data-modelurl="'.$url.'"><script src="'.$this->addJS($view).'" type="module"></script><div id="loading-screen"><div id="loader"></div></div></div>';
     }
 
     public function addJS(PhpRenderer $view){      

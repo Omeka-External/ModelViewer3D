@@ -16,10 +16,17 @@ function animate() {
 
     const scene = new THREE.Scene();
 
+    const loadingManager = new THREE.LoadingManager( () => {
+	
+		const loadingScreen = document.getElementById( 'loading-screen' );
+		loadingScreen.classList.add( 'fade-out' );
+		loadingScreen.addEventListener( 'transitionend', onTransitionEnd );
+		
+	} );
+
     const modeldiv = document.querySelector('.model-viewer-3d');
     modeldiv.appendChild(renderer.domElement);
     var modelurl = modeldiv.dataset.modelurl;
-    console.log(modelurl);
     var ambientLight = new THREE.AmbientLight( 0xffffff, 0.4);
     scene.add(ambientLight);
     var pointLight = new THREE.PointLight(0xffffff, 0.8);
@@ -28,7 +35,11 @@ function animate() {
     var pivoter = new THREE.Group();
     scene.add(pivoter);
     var controls = new OrbitControls( camera, renderer.domElement );
-    var mtlLoader = new MTLLoader();
+    controls.autoRotate = true;
+    controls.addEventListener('start', function(){
+        controls.autoRotate = false;
+    })
+    var mtlLoader = new MTLLoader(loadingManager);
     mtlLoader.load(modelurl + '.mtl', function (materials) {
         materials.preload();
         var loader = new OBJLoader();
@@ -60,11 +71,10 @@ function animate() {
         if (resizeRendererToDisplaySize(renderer)) {
         const canvas = renderer.domElement;
         camera.aspect = canvas.clientWidth / canvas.clientHeight;
-        camera.zoom = 3;
+        camera.zoom = 2.5;
         camera.updateProjectionMatrix();
         }
 
-        controls.autoRotate = true;
         controls.update();
         renderer.render(scene, camera);
 
