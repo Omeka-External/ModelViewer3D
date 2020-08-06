@@ -16,14 +16,13 @@ function animate() {
 
     const scene = new THREE.Scene();
 
-    const loadingManager = new THREE.LoadingManager( () => {
-	
-		const loadingScreen = document.getElementById( 'loading-screen' );
-		loadingScreen.classList.add( 'fade-out' );
-		loadingScreen.addEventListener( 'transitionend', onTransitionEnd );
-		
-	} );
+    const loadingScreen = document.getElementById( 'loading-screen' );
 
+    THREE.DefaultLoadingManager.onLoad = function ( ) {
+        loadingScreen.classList.add( 'fade-out' );
+        loadingScreen.addEventListener( 'transitionend', onTransitionEnd );
+    };
+		
     const modeldiv = document.querySelector('.model-viewer-3d');
     modeldiv.appendChild(renderer.domElement);
     var modelurl = modeldiv.dataset.modelurl;
@@ -39,7 +38,7 @@ function animate() {
     controls.addEventListener('start', function(){
         controls.autoRotate = false;
     })
-    var mtlLoader = new MTLLoader(loadingManager);
+    var mtlLoader = new MTLLoader();
     mtlLoader.load(modelurl + '.mtl', function (materials) {
         materials.preload();
         var loader = new OBJLoader();
@@ -75,7 +74,6 @@ function animate() {
         if (resizeRendererToDisplaySize(renderer)) {
         const canvas = renderer.domElement;
         camera.aspect = canvas.clientWidth / canvas.clientHeight;
-        camera.zoom = 2.5;
         camera.updateProjectionMatrix();
         }
 
