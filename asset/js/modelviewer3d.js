@@ -12,7 +12,7 @@ function animate() {
     const far = 1000;
 
     const camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
-    camera.position.z = 2;
+    camera.position.z = 1;
 
     const scene = new THREE.Scene();
 
@@ -45,8 +45,17 @@ function animate() {
         loader.setMaterials(materials);
         loader.load(modelurl + '.obj',
         function (object) {
+            var offset = 5;    
             var box = new THREE.Box3().setFromObject(object);
             var center = new THREE.Vector3();
+
+            var size = box.getSize();
+            const maxDim = Math.max( size.x, size.y, size.z );
+            const fov = camera.fov * ( Math.PI / 180 );
+            let cameraZ = Math.abs( maxDim / 4 * Math.tan( fov * 2 ) );
+            cameraZ *= offset; // zoom out a little so that objects don't fill the screen
+            camera.position.z = cameraZ;
+
             box.getCenter(center);
             object.position.sub(center);
             pivoter.add(object);
